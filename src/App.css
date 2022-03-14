@@ -11,17 +11,23 @@ main {
   align-content: center;
   justify-content: center;
   text-align: center;
+  flex-direction: column;
 }
 
 .pokemon-list {
   display: flex;
   align-content: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin: 2.5em;
 }
 
 .pokemon-list-element {
   background: white;
+  width: 25%;
+  margin: 1em;
+  border: red solid 3px;
 }
 
 /*.App-logo {*/

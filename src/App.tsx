@@ -27,7 +27,7 @@ function App() {
     // }
 
     function getNewLink() {
-        number += 20;
+        number += number;
         console.log(number);
         updateCurrentPageUrl(`https://pokeapi.co/api/v2/pokemon?limit=${number}&offset=0`);
     }
