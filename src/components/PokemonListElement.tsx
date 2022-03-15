@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import axios, {AxiosError, AxiosResponse} from "axios";
 import LoadingDots from "./LoadingDots";
+import PokemonModal from "./PokemonModal";
 
 export default function PokemonListElement({ pokemon } : { pokemon: any }) {
     const [error, updateError] = useState(false);
     const [pokemonDetails, updatePokemonDetails] = useState<any>();
     const link = `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`;
     const [loading, updateLoading] = useState(true);
+    const [showModal, updateShowModal] = useState(false);
 
     useEffect(() => {
         updateError(false);
@@ -23,9 +25,14 @@ export default function PokemonListElement({ pokemon } : { pokemon: any }) {
         });
         return () => controller.abort();
     }, [link]);
+
+    function toggleModal() {
+        updateShowModal(prev => !prev);
+        console.log(showModal)
+    }
     return (
         <>
-            <div className={"pokemon-list-element"}>
+            <div onClick={toggleModal} className={"pokemon-list-element"}>
                 {loading && <LoadingDots />}
                 {!loading && <img src={pokemonDetails ? pokemonDetails.sprites.front_default : " "} />}
                 {!loading && <span className={"pokemon-name"}> {pokemon.name.toUpperCase()}</span>}
@@ -33,6 +40,7 @@ export default function PokemonListElement({ pokemon } : { pokemon: any }) {
                 + pokemonDetails.types[0].type.name.toString().slice(1)}</span>}
             </div>
             <div>{error && 'Error...'}</div>
+            {showModal && <PokemonModal pokemonDetails={pokemonDetails} toggleModal={toggleModal}/>}
         </>
     );
 }
