@@ -3,7 +3,18 @@
 }
 
 body {
-  background: rgba(248, 248, 248, 0.99);
+  background: rgba(252, 252, 252, 0.99);
+  padding-bottom: 2em;
+}
+
+#title {
+  text-align: center;
+  font-size: 4.5em;
+  -webkit-text-stroke: 5px #416CB0;
+  -webkit-text-fill-color: #F8CC47;
+  color: #F8CC47;
+  font-family: 'Luckiest Guy', cursive;
+  margin-bottom: 0;
 }
 
 main {
@@ -20,47 +31,67 @@ main {
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
-  margin: 2.5em;
+  margin: 3.5em 7em 3.5em 7em;
 }
 
 .pokemon-list-element {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
   background: white;
-  width: 25%;
+  width: 15em;
+  height: 18em;
   margin: 1em;
-  border: red solid 3px;
+  border-radius: 1em;
+  padding: 1em;
+  -webkit-box-shadow: 8px 8px 26px -16px rgba(0, 0, 0, 0.59);
+  -moz-box-shadow: 8px 8px 26px -16px rgba(0, 0, 0, 0.59);
+  box-shadow: 8px 8px 26px -16px rgba(0, 0, 0, 0.59);
+  border: transparent solid 2px;
 }
 
-/*.App-logo {*/
-/*  height: 40vmin;*/
-/*  pointer-events: none;*/
-/*}*/
+.pokemon-list-element:hover {
+  border: red solid 2px;
+  -webkit-box-shadow: 8px 8px 26px -11px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 8px 8px 26px -11px rgba(0, 0, 0, 1);
+  box-shadow: 8px 8px 26px -11px rgba(0, 0, 0, 1);
+}
 
-/*@media (prefers-reduced-motion: no-preference) {*/
-/*  .App-logo {*/
-/*    animation: App-logo-spin infinite 20s linear;*/
-/*  }*/
-/*}*/
+.pokemon-name {
+  font-size: 1.5em;
+}
 
-/*.App-header {*/
-/*  background-color: #282c34;*/
-/*  min-height: 100vh;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  font-size: calc(10px + 2vmin);*/
-/*  color: white;*/
-/*}*/
+.more-button {
+  font-size: 2em;
+  border-radius: .5em;
+  padding: .4em;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: white;
+  color: #FF1616;
+  border: #FF1616 solid 3px;
+}
 
-/*.App-link {*/
-/*  color: #61dafb;*/
-/*}*/
+.more-button:hover, .more-button:active {
+  background-color: #FF1616;
+  color: white;
+  border: white solid 3px;
+}
 
-/*@keyframes App-logo-spin {*/
-/*  from {*/
-/*    transform: rotate(0deg);*/
-/*  }*/
-/*  to {*/
-/*    transform: rotate(360deg);*/
-/*  }*/
-/*}*/
+.loading-container {
+  margin: auto;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  justify-content: space-around;
+  justify-self: center;
+}
+
+.loading-circle {
+  display: block;
+  width: .8rem;
+  height: .8rem;
+  background-color: #F8CC47;
+  border-radius: 0.5rem;
+}

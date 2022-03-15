@@ -1,44 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios, {AxiosResponse, Canceler} from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import PokemonList from "./components/PokemonList";
 import GetMoreButton from "./components/GetMoreButton";
+import LoadingDots from "./components/LoadingDots";
 
-let number: number = 20;
 
 function App() {
-    const [pokemonData, updatePokemon] = useState([]);
+    const [pokemonData, updatePokemon] = useState<any[]>([]);
     const [currentPageUrl, updateCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0");
     const [loading, updateLoading] = useState(true);
+    const [number, updateNumber] = useState(40);
+    const [error, updateError] = useState(false);
+    const [isMore, updateIsMore] = useState(false)
+
     useEffect(() => {
         updateLoading(true);
+        updateError(false);
         const controller = new AbortController();
         axios.get(currentPageUrl, {
             signal: controller.signal
         }).then((res : AxiosResponse) => {
                 updateLoading(false);
-                updatePokemon(res.data.results.map((p : any) => p));
-            });
+                updatePokemon(prev =>
+                    [...prev, res.data.results.map((p : any) => p)]);
+                updateIsMore(res.data.results.length > 0);
+        }).catch((error : AxiosError) => {
+            if (axios.isCancel(error)) {
+                updateError(true);
+            }
+        });
         return () => controller.abort();
     }, [currentPageUrl]);
 
-    // if (loading) {
-    //     return "Loading...";
-    // }
-
     function getNewLink() {
-        number += number;
-        console.log(number);
-        updateCurrentPageUrl(`https://pokeapi.co/api/v2/pokemon?limit=${number}&offset=0`);
+        updateNumber(number => number + 20);
+        updateCurrentPageUrl(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${number}`);
     }
 
     return (
        <>
           <header>
-              <h1>Pokedex</h1>
+              <h1 id={"title"}>Pokedex</h1>
           </header>
            <main>
             <PokemonList pokemons={pokemonData} />
+              {loading && <LoadingDots />}
+               <div>{error && 'Error...'}</div>
             <GetMoreButton getNewLink={getNewLink}/>
            </main>
        </>
