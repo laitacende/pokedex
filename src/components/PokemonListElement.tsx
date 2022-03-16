@@ -28,7 +28,6 @@ export default function PokemonListElement({ pokemon } : { pokemon: any }) {
 
     function toggleModal() {
         updateShowModal(prev => !prev);
-        console.log(showModal)
     }
     return (
         <>

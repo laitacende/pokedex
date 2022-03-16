@@ -4,15 +4,21 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 import PokemonList from "./components/PokemonList";
 import GetMoreButton from "./components/GetMoreButton";
 import LoadingDots from "./components/LoadingDots";
+import UseDarkMode from "./styles/UseDarkMode";
+import ThemeToggle from "./components/ThemeToggle";
+import {GlobalStyles, lightTheme, darkTheme} from "./styles/globalStyles";
+import styled, { ThemeProvider } from "styled-components";
 
 
 function App() {
+    const [theme, toggleTheme] = UseDarkMode();
     const [pokemonData, updatePokemon] = useState<any[]>([]);
     const [currentPageUrl, updateCurrentPageUrl] = useState("https://pokeapi.co/api/v2/pokemon?limit=20&offset=0");
     const [loading, updateLoading] = useState(true);
     const [number, updateNumber] = useState(40);
     const [error, updateError] = useState(false);
     const [isMore, updateIsMore] = useState(false)
+    const themeMode = theme === 'light' ? lightTheme : darkTheme;
 
     useEffect(() => {
         updateLoading(true);
@@ -33,14 +39,17 @@ function App() {
         return () => controller.abort();
     }, [currentPageUrl]);
 
-    function getNewLink() {
+    function getNewLink(link: string) {
         updateNumber(number => number + 20);
         updateCurrentPageUrl(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${number}`);
     }
 
     return (
        <>
+           <ThemeProvider theme={themeMode}>
+               <GlobalStyles />
           <header>
+              <ThemeToggle  theme={theme} toggleTheme={toggleTheme}/>
               <h1 id={"title"}>Pokedex</h1>
           </header>
            <main>
@@ -49,6 +58,7 @@ function App() {
                <div>{error && 'Error...'}</div>
             <GetMoreButton getNewLink={getNewLink}/>
            </main>
+           </ThemeProvider>
        </>
       );
 }
